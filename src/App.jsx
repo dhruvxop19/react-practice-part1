@@ -30,11 +30,21 @@ function Counter() {
 
   // guard our set intervals from re renders 
   useEffect(function () {
-    setInterval(function () {
+    console.log("mount");
+     let clock = setInterval(function () {
+      console.log ("from inisde setInterval");
       setCount(count => count + 1);
-    }, 1000)
-    console.log("mounted");
-  }, []);
+    }, 1000) ;
+   
+
+
+  return function(){
+    console.log ("on unmount");
+    clearInterval (clock)
+  }
+    }, []);
+
+
 
   function increaseCount() {
     setCount(count + 1);
