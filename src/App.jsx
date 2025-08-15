@@ -1,10 +1,20 @@
 import { useState, useEffect } from "react"
 // conditonal rendering 
 function App() {
-  let counterVisible = true;
+  let [counterVisible, setCounterVisible ] = useState (true);
+
+  useEffect (function(){
+    setInterval (function(){
+      setCounterVisible (c => !c)
+    }, 5000);
+  } ,[])
+
+
   return <div>
    {counterVisible ?  <Counter></Counter> : null }
    {counterVisible && <Counter></Counter>}
+   hello there 
+   
   </div>
 }
 
