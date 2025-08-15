@@ -1,61 +1,48 @@
-import { useState, useEffect } from "react"
-// conditonal rendering 
-function App() {
-  let [counterVisible, setCounterVisible ] = useState (true);
-
-  useEffect (function(){
-    setInterval (function(){
-      setCounterVisible (c => !c)
-    }, 5000);
-  } ,[])
+import { useState, useEffect } from "react";
+// useEffect, dependancy array , cleanup  
 
 
-  return <div>
-   {counterVisible ?  <Counter></Counter> : null }
-   {counterVisible && <Counter></Counter>}
-   hello there 
-   
-  </div>
+
+export default function App (){
+const [count, setCount] = useState (0);
+const [count2, setCount2] = useState (0);
+
+function increase (){
+  setCount(c => c + 1);
+  //setCount (count + 1);
 }
 
-// mounting , re rendering , unmounting 
-function Counter() {
-  const [count, setCount] = useState(0);
-  // hooking into lifecycle events of react
-  console.log("counter")
+function decrease (){
+  setCount2 (c => c - 1);
+}
+return <div>
+   <Counter count = {count} count2 = {count2} />
+   <button onClick={increase}>Increase Count </button>
+   <button onClick={decrease}> Decrease Count </button>
+  
+</div>
+}
 
-  //  setInterval (function(){
-  //   setCount ( count + 1);
-  //  }, 1000)
+function Counter (props){
 
-  // guard our set intervals from re renders 
-  useEffect(function () {
+
+  useEffect(function(){
     console.log("mount");
-     let clock = setInterval(function () {
-      console.log ("from inisde setInterval");
-      setCount(count => count + 1);
-    }, 1000) ;
-   
 
+    return function (){
+      console.log ("unmount");
+    }
+  },[]) ;
 
-  return function(){
-    console.log ("on unmount");
-    clearInterval (clock)
-  }
-    }, []);
+  useEffect (function (){
+    console.log ("count has changed ")
+  } , [props.count] )
 
-
-
-  function increaseCount() {
-    setCount(count + 1);
-  }
 
   return <div>
-    <h1 id="text">{count}</h1>
-    <button onClick={increaseCount}>increasecount</button>
+    Counter1 {props.count} <br />
+    Counter2 {props.count2} <br /> 
   </div>
 
 }
 
-
-export default App 
