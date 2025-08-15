@@ -1,25 +1,36 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 function App (){
   return <div>
-   
-<b>
-    Hey There 
-</b>
   <Counter></Counter>
   </div>
 }
 
-
+// mounting , re rendering , unmounting 
 function Counter(){
  const [count , setCount] = useState(0);
+// hooking into lifecycle events of react
+ console.log("counter")
 
- setInterval (function(){
-  setCount ( count + 1);
- }, 1000)
+//  setInterval (function(){
+//   setCount ( count + 1);
+//  }, 1000)
+
+// guard our set intervals from re renders 
+useEffect (function(){
+  setInterval (function(){
+    setCount (count => count + 1 );
+  }, 1000)
+  console.log ("mounted");
+}, []);
+
+function increaseCount (){
+  setCount( count + 1 );
+}
 
   return <div>
     <h1 id="text">{count}</h1>
+    <button onClick={increaseCount}>increasecount</button>
   </div>
  
 }
