@@ -24,13 +24,10 @@ useEffect (function(){
   console.log ("mounted");
 }, []);
 
-function increaseCount (){
-  setCount( count + 1 );
-}
 
   return <div>
     <h1 id="text">{count}</h1>
-    <button onClick={increaseCount}>increasecount</button>
+    
   </div>
  
 }
